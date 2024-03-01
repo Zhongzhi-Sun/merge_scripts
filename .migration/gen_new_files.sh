@@ -86,15 +86,19 @@ From: [https://github.com/SocialFlowDev/$repo_name](https://github.com/SocialFlo
 - [X] dist.ini
 - [X] release
 - [X] cpanfile
-- [ ] cpanfile.pinned
-- [ ] container.dep
-- [ ] Tests
+- [X] cpanfile.pinned
+- [X] container.dep
+- [X] Tests
 - [ ] Initial Release
 - [ ] Any dependents re-pinned (checks released)
 - [ ] Old repo archived
 - [ ] Set to sf-perl In the list of distributions
 - [ ] Colleagues informed
 - [ ] sf-deploy-application changed
+
+## New added dependencies
+
+- 'Test::Compile::Internal'
 
 EOT
 
