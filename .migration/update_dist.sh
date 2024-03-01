@@ -8,7 +8,7 @@ if [ $# -eq 0 ]; then
     current_branch=$(git rev-parse --abbrev-ref HEAD)
     # Extract the substring after the first slash
     input_file="./libs/${current_branch#*/}/dist.ini"
-    temp_file="./libs/$repo_name/temp_dist.ini"
+    temp_file="./libs/${current_branch#*/}/temp_dist.ini"
 else
     input_file=$1
     temp_file=$(dirname "$input_file")/temp_dist.ini
