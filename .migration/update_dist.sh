@@ -7,13 +7,11 @@ if [ $# -eq 0 ]; then
     # Get the current Git branch name
     current_branch=$(git rev-parse --abbrev-ref HEAD)
     # Extract the substring after the first slash
-    repo_name=${current_branch#*/}
-    input_file="./libs/$repo_name/dist.ini"
+    input_file="./libs/${current_branch#*/}/dist.ini"
     temp_file="./libs/$repo_name/temp_dist.ini"
 else
-    repo_name=$1
     input_file=$1
-    temp_file="temp_dist.ini"
+    temp_file=$(dirname "$input_file")/temp_dist.ini
 fi
 
 # Get current year and month
@@ -27,15 +25,15 @@ no_tag_items=()
 section=""
 
 # Process the input file
-while IFS= read -r line
-do
-    if [[ $line == \[*\] ]]; then
+
+while IFS= read -r line; do
+    if [[ $line =~ ^\[.*\]$ ]]; then  # Corrected pattern matching for section headers
         section=$line
-        sections[$section]=""
-    elif [[ $line == \;*\]]]; then
+        sections["$section"]=""
+    elif [[ $line == \;* ]]; then  # Corrected pattern matching for comments
         continue
     elif [[ -n $section ]]; then
-        sections[$section]+="$line\n"
+        sections["$section"]+="$line"$'\n'  # Corrected newline addition
     elif [[ -n $line ]]; then
         no_tag_items+=("$line")
     fi
@@ -83,6 +81,8 @@ for section in "${sorted[@]}"; do
         fi
     fi
 done
+
+sed -i ':a;N;$!ba;s/\n\n/\n/g' $temp_file
 
 # Clear the input file and write the updated content into it
 cat $temp_file > $input_file
