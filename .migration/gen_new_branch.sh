@@ -44,12 +44,20 @@ git checkout main # Attempt to checkout main, if it fails, try master
 git fetch origin
 git reset --hard origin/main # Reset to remote main/master
 git clean -d -f # Clean all untracked files in your git workdir
+echo "===check status after clean"
+git status
 
 # Check if project already exists
 if [ -d "./libs/$branch_name" ]; then
     echo "The path './libs/$branch_name' exists in the Git repository."
     exit 1
 fi
+# check if branch already exists
+if git show-ref --verify --quiet refs/heads/sf-perl-migration/$branch_name; then
+  echo "Branch 'sf-perl-migration/$branch_name' exists locally."
+  exit 1
+fi
+
 
 # Add project
 git subtree add --prefix=libs/$branch_name git@github.com:SocialFlowDev/$branch_name.git master || {
