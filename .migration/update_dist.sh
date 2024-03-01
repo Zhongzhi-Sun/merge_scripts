@@ -27,13 +27,13 @@ section=""
 # Process the input file
 
 while IFS= read -r line; do
-    if [[ $line =~ ^\[.*\]$ ]]; then  # Corrected pattern matching for section headers
+    if [[ $line =~ ^\[.*\]$ ]]; then
         section=$line
         sections["$section"]=""
-    elif [[ $line == \;* ]]; then  # Corrected pattern matching for comments
+    elif [[ $line == \;* ]]; then
         continue
     elif [[ -n $section ]]; then
-        sections["$section"]+="$line"$'\n'  # Corrected newline addition
+        sections["$section"]+="$line"$'\n'
     elif [[ -n $line ]]; then
         no_tag_items+=("$line")
     fi
