@@ -92,7 +92,7 @@ def main(path) ->None:
         exist_deps, missing_deps = cpan.check_cpanfile(deps,cpan.cpan_path)
         # print(f"exist__deps={exist_deps}\nmissed_deps={missing_deps}\n")
         if len(missing_deps) != 0:
-            print("==== Please add lines below into cpanfile manully:\n")
+            print("==== Please add the lines below into cpanfile manually:\n")
             for item in missing_deps:
                 print(f"requires {item};")
         else:
