@@ -13,7 +13,11 @@ BEGIN {
     $ENV{SOCIALFLOW_TEMPLATE_PATH} = "$FindBin::Bin/../root/templates";
 };
 
-my $path = "$FindBin::Bin/../lib/";
+if (@ARGV) {
+  my $path = $ARGV[0];
+} else {
+  my $path = "$FindBin::Bin/../lib/";
+}
 my @pms = Test::Compile::Internal->all_pm_files($path);
 
 plan tests => 0+@pms;
